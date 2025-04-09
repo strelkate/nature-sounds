@@ -21,6 +21,7 @@ body {
     transition: background 0.5s ease-in-out;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .player {
@@ -38,10 +39,20 @@ body {
     border-radius: 12px;
 }
 
+#volume {
+    width: 90%;
+    height: 8px;
+    cursor: pointer;
+}
+
 button {
     margin: 0.5rem;
     padding: 2rem 3rem;
     font-size: 1.2rem;
     background-color: rgba(0, 0, 0, 0.4);
     cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
 }

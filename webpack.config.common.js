@@ -36,6 +36,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
@@ -60,25 +65,25 @@ module.exports = {
         include: path.resolve(__dirname, 'src/fonts'),
         type: 'asset/resource',
         generator: {
-          filename: 'assets/fonts/[name][ext]'
-        }
+          filename: 'assets/fonts/[name][ext]',
+        },
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         include: path.resolve(__dirname, 'assets/images'),
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[name][ext]'
-        }
+          filename: 'assets/images/[name][ext]',
+        },
       },
       {
         test: /\.(mp3|wav|ogg)$/i,
         include: path.resolve(__dirname, 'assets/sounds'),
         type: 'asset/resource',
         generator: {
-          filename: 'assets/sounds/[name][ext]'
-        }
-      }
+          filename: 'assets/sounds/[name][ext]',
+        },
+      },
     ],
   },
 }

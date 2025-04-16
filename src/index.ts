@@ -3,25 +3,29 @@ import rainSound from '../assets/sounds/rain.mp3'
 import winterSound from '../assets/sounds/winter.mp3'
 import summerSound from '../assets/sounds/summer.mp3'
 
-const sounds = {
+type SoundKey = 'rain' | 'winter' | 'summer'
+
+const sounds: Record<SoundKey, string> = {
   rain: rainSound,
   winter: winterSound,
   summer: summerSound
 }
 
-let currentAudio = null
-let isPlaying = false
-let currentKey = null
-let currentIcon = null
+let currentAudio: HTMLAudioElement | null = null
+let isPlaying: boolean = false
+let currentKey: SoundKey | null = null
+let currentIcon: HTMLImageElement | null = null
 
-const buttons = document.querySelectorAll('[data-sound]')
-const volumeSlider = document.getElementById('volume')
-const wrapper = document.querySelector('.wrapper')
+const buttons = document.querySelectorAll('[data-sound]') as NodeListOf<HTMLElement>
+const volumeSlider = document.getElementById('volume') as HTMLInputElement
+const wrapper = document.querySelector('.wrapper') as HTMLElement
 
 buttons.forEach(button => {
   button.addEventListener('click', () => {
-    const key = button.dataset.sound
-    const icon = button.querySelector('img')
+    const key = button.dataset.sound as SoundKey
+    const icon = button.querySelector('img') as HTMLImageElement
+
+    if (!key || !icon) return
 
     // Same button toggles
     if (currentKey === key && currentAudio) {
@@ -41,12 +45,14 @@ buttons.forEach(button => {
     if (currentAudio) {
       currentAudio.pause()
       currentAudio.currentTime = 0
-      currentIcon.src = `../assets/icons/${currentKey}.svg`
+      if (currentIcon && currentKey) {
+        currentIcon.src = `../assets/icons/${currentKey}.svg`
+      }
     }
 
     // Play new
     currentAudio = new Audio(sounds[key])
-    currentAudio.volume = volumeSlider.value
+    currentAudio.volume = parseFloat(volumeSlider.value)
     currentAudio.loop = true
     currentAudio.play()
     isPlaying = true
@@ -61,6 +67,6 @@ buttons.forEach(button => {
 
 volumeSlider.addEventListener('input', () => {
   if (currentAudio) {
-    currentAudio.volume = volumeSlider.value
+    currentAudio.volume = parseFloat(volumeSlider.value)
   }
 })
